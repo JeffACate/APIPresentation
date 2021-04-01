@@ -1,6 +1,6 @@
 ﻿using System;
-using System.IO;
-using System.Net;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Helpers;
 
@@ -10,7 +10,7 @@ namespace AppNameSpace
     {
         public void Run()
         {
-            // formatData()
+            // formatRequest()
             // callAPI()
             // formatResponse()
             // displayResponse()
@@ -20,21 +20,26 @@ namespace AppNameSpace
 
             string endpoint = baseUrl + options;
 
-            WebRequest req = WebRequest.Create(endpoint);
-            req.Method = "GET";
+            MakeRequest(endpoint);
 
-            var res = req.GetResponse();
-
-            var stream = res.GetResponseStream();
-
-            var reader = new StreamReader(stream);
-
-            var data = Json.Decode(reader.ReadToEnd());
-            Console.WriteLine($"       id: {data._id}");
-            Console.WriteLine($"     text: {data.text}");
-            Console.WriteLine($"     type: {data.type}");
-            Console.WriteLine($"createdAt: {data.createdAt}");
             Console.ReadKey();
+        }
+
+        private async Task MakeRequest(string endpoint)
+        {
+            HttpClient client = new HttpClient();
+            var data = await client.GetStringAsync(endpoint);
+
+            Console.WriteLine();
+            var obj = Json.Decode(data.ToString());
+
+            Console.WriteLine($"       id: {obj._id}");
+            Console.WriteLine($"     text: {obj.text}");
+            Console.WriteLine($"     type: {obj.type}");
+            Console.WriteLine($"createdAt: {obj.createdAt}");
+
+            return ;
+
         }
     }
 }
