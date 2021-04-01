@@ -1,1 +1,1 @@
-# GitIgnioreExample
+# GitignioreExample
