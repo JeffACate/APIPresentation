@@ -1,4 +1,5 @@
-﻿using System;
+﻿using APIPresentation;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -10,17 +11,14 @@ namespace AppNameSpace
     {
         public void Run()
         {
-            // formatRequest()
-            // callAPI()
-            // formatResponse()
-            // displayResponse()
-
             string baseUrl = "https://cat-fact.herokuapp.com";
             string options = "/facts/random";
 
             string endpoint = baseUrl + options;
 
             MakeRequest(endpoint);
+
+            Console.WriteLine("This Ends first.");
 
             Console.ReadKey();
         }
@@ -33,12 +31,14 @@ namespace AppNameSpace
             Console.WriteLine();
             var obj = Json.Decode(data.ToString());
 
+            CatFact catFact = Json.Decode<CatFact>(data);
+            
+            
             Console.WriteLine($"       id: {obj._id}");
             Console.WriteLine($"     text: {obj.text}");
-            Console.WriteLine($"     type: {obj.type}");
-            Console.WriteLine($"createdAt: {obj.createdAt}");
-
-            return ;
+            Console.WriteLine($"     type: {obj.type}\n");
+            Console.WriteLine($"     text: {catFact.text}");
+            //Console.WriteLine($" verified: {catFact.status.}");
 
         }
     }

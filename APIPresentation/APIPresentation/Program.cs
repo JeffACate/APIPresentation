@@ -13,6 +13,8 @@ namespace APIPresentation
         {
             App app = new App();
             app.Run();
+
+            Console.Read();
         }
     }
 }
